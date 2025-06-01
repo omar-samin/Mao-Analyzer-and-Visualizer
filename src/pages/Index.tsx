@@ -47,7 +47,7 @@ const Index = () => {
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-2">
-            Generalized CSV Data Analyzer & Visualizer
+            Mao CSV Data Analyzer & Visualizer
           </h1>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
             Upload any CSV file to automatically generate comprehensive data analysis, 
