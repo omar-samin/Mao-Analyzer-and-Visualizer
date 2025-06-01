@@ -54,7 +54,6 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload, isLoading }) => {
       </div>
       <div className="text-sm text-gray-600 space-y-1">
         <p>• Supported format: CSV files only</p>
-        <p>• Maximum file size: 50MB</p>
         <p>• First row should contain column headers</p>
       </div>
     </div>
