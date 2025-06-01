@@ -1,5 +1,9 @@
 # Welcome to your Lovable project
 
+## Application Link
+
+**URL**: https://csv-data-analyzer-and-visualizer.lovable.app/
+
 ## Project info
 
 **URL**: https://lovable.dev/projects/69777fe8-4e9a-449a-a90b-57d1d2716763
