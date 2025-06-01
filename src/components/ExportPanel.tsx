@@ -1,9 +1,8 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { DataSet } from '@/types/data';
-import { Download, FileText, Image, FileSpreadsheet } from 'lucide-react';
+import { Download, FileText, FileSpreadsheet } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface ExportPanelProps {
@@ -41,31 +40,6 @@ const ExportPanel: React.FC<ExportPanelProps> = ({ dataset }) => {
     } finally {
       setIsExporting(false);
     }
-  };
-
-  const exportToCSV = () => {
-    const csvContent = [
-      dataset.columns.map(col => col.name).join(','),
-      ...dataset.rows.map(row => 
-        dataset.columns.map(col => {
-          const value = row[col.name];
-          return typeof value === 'string' && value.includes(',') ? `"${value}"` : value;
-        }).join(',')
-      )
-    ].join('\n');
-
-    const blob = new Blob([csvContent], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${dataset.filename}_processed.csv`;
-    a.click();
-    URL.revokeObjectURL(url);
-
-    toast({
-      title: "CSV exported successfully!",
-      description: "Your processed dataset has been downloaded.",
-    });
   };
 
   const exportStatistics = () => {
@@ -186,54 +160,27 @@ Range: ${(sorted[n-1] - sorted[0]).toFixed(4)}
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Reports Section */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Analysis Reports</h3>
-            <div className="space-y-3">
-              <Button 
-                onClick={exportToPDF}
-                disabled={isExporting}
-                className="w-full justify-start"
-                variant="outline"
-              >
-                <FileText className="w-4 h-4 mr-2" />
-                Export Full Analysis Report
-              </Button>
-              
-              <Button 
-                onClick={exportStatistics}
-                className="w-full justify-start"
-                variant="outline"
-              >
-                <FileSpreadsheet className="w-4 h-4 mr-2" />
-                Export Statistical Summary
-              </Button>
-            </div>
-          </div>
-
-          {/* Data Section */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Data Export</h3>
-            <div className="space-y-3">
-              <Button 
-                onClick={exportToCSV}
-                className="w-full justify-start"
-                variant="outline"
-              >
-                <FileSpreadsheet className="w-4 h-4 mr-2" />
-                Export Processed CSV
-              </Button>
-              
-              <Button 
-                disabled
-                className="w-full justify-start"
-                variant="outline"
-              >
-                <Image className="w-4 h-4 mr-2" />
-                Export Visualizations (Coming Soon)
-              </Button>
-            </div>
+        <div className="max-w-md mx-auto">
+          <h3 className="text-lg font-semibold mb-4">Analysis Reports</h3>
+          <div className="space-y-3">
+            <Button 
+              onClick={exportToPDF}
+              disabled={isExporting}
+              className="w-full justify-start"
+              variant="outline"
+            >
+              <FileText className="w-4 h-4 mr-2" />
+              Export Full Analysis Report
+            </Button>
+            
+            <Button 
+              onClick={exportStatistics}
+              className="w-full justify-start"
+              variant="outline"
+            >
+              <FileSpreadsheet className="w-4 h-4 mr-2" />
+              Export Statistical Summary
+            </Button>
           </div>
         </div>
 
@@ -243,8 +190,6 @@ Range: ${(sorted[n-1] - sorted[0]).toFixed(4)}
           <ul className="text-sm text-gray-700 space-y-1">
             <li>• Full Analysis Report: Comprehensive text report with all insights and statistics</li>
             <li>• Statistical Summary: Detailed numerical analysis for all quantitative columns</li>
-            <li>• Processed CSV: Your original data with any cleaning applied</li>
-            <li>• Individual visualizations export feature is coming in future updates</li>
           </ul>
         </div>
 
